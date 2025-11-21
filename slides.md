@@ -49,17 +49,15 @@ The last comment block of each slide will be treated as slide notes. It will be 
 transition: fade-out
 ---
 
-# What is Slidev?
+# Outline
 
-Slidev is a slides maker and presenter designed for developers, consist of the following features
-
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - themes can be shared and re-used as npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embed Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export to PDF, PPTX, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - virtually anything that's possible on a webpage is possible in Slidev
+- 📝 **Transition from R** - 2018, dplyr -> polars, ggplot2 -> ?, Rcpp -> maturin + pyo3
+- 🎨 **Rust features** - error propagation, compiled, strongly typed, borrow checker
+- 🧑‍💻 **Tooling** - cargo | pip poetry uv; pytest flake8 ruff; sphynx
+- 🤹 **Python features** - int (unbounded), str (cached), dict (sorted)
+- 🎥 **Examples** - uv+ruff, polars
+- 📤 **Interoperability** - pyo3, maturin, show demo
+- 🛠 **pyo3-polars** - how (not) to call python from rust
 <br>
 <br>
 
@@ -88,7 +86,7 @@ Here is another comment.
 
 ---
 transition: slide-up
-level: 2
+level: 3
 ---
 
 # Navigation
