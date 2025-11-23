@@ -1,52 +1,20 @@
 ---
-# try also 'default' to start simple
 theme: seriph
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
-# some information about your slides (markdown enabled)
-title: Welcome to Slidev
-info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
-
-  Learn more at [Sli.dev](https://sli.dev)
-# apply UnoCSS classes to the current slide
+background: https://cdn.jsdelivr.net/gh/slidevjs/slidev-covers@main/static/6terqWC_KCk.webp
+title: Forged in Rust, Spoken in Python
 class: text-center
-# https://sli.dev/features/drawing
 drawings:
   persist: false
-# slide transition: https://sli.dev/guide/animations.html#slide-transitions
 transition: slide-left
-# enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
-# duration of the presentation
 duration: 35min
 ---
 
-# Welcome to Slidev
+# Forged in Rust,<br>Spoken in Python
+## Jan Kislinger
+### PyData Prague, November 2025
 
-Presentation slides for developers
 
-<div @click="$slidev.nav.next" class="mt-12 py-1" hover:bg="white op-10">
-  Press Space for next page <carbon:arrow-right />
-</div>
-
-<div class="abs-br m-6 text-xl">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="slidev-icon-btn">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" class="slidev-icon-btn">
-    <carbon:logo-github />
-  </a>
-</div>
-
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
-
----
-transition: fade-out
 ---
 
 # Outline
@@ -58,31 +26,331 @@ transition: fade-out
 - 🎥 **Examples** - uv+ruff, polars
 - 📤 **Interoperability** - pyo3, maturin, show demo
 - 🛠 **pyo3-polars** - how (not) to call python from rust
+
+---
+
+# 2018: R -> Python
+
+- dplyr <span v-click>-> polars</span>
+- ggplot2 <span v-click>-> 😔</span>
+- Rcpp <span v-click>-> PyO3 + maturin</span>
+
+
+---
+layout: two-cols-header
+---
+
+# Jan Kislinger
+
+
+::left::
+
+- ML Engineer
+- Personalization
+
 <br>
 <br>
 
-Read more about [Why Slidev?](https://sli.dev/guide/why)
+<div style="height:120px; display:flex; align-items:flex-start;">
+  <img src="/assets/logos/sky.png" alt="Sky"
+       style="height:100%; object-fit:contain;" />
+</div>
 
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/features/slide-scope-style
--->
+::right::
+
+
+
+- PhD student
+- Full-page recommendations
+
+<br>
+<br>
+
+<div style="height:120px; display:flex; align-items:flex-start;">
+  <img src="/assets/logos/ctu.jpg" alt="CTU"
+       style="height:100%; object-fit:contain;" />
+</div>
+
+---
+layout: image-right
+image: https://cdn.jsdelivr.net/gh/slidevjs/slidev-covers@main/static/4uH95YbrT0c.webp
+class: text-2xl
+---
+
+# Agenda
+
+- Language Comparison
+- Successful Stories
+- Interoperability
+
+---
+layout: section
+---
+
+# Language Comparison
+
+## Two different worlds
+
+---
+
+# Rust Features
+
+- Compiled
+- Strongly typed
+- Traits
+- Enum, Option, Result
+- Propagated errors
+- Borrow checker
+
+---
+layout: image-left
+image: /assets/rust_book.jpg
+backgroundSize: contain
+---
+
+# The Rust Book
+
+https://doc.rust-lang.org/book/
+
+---
+
+# Tooling
+
+### Python
+
+- Environment: `pip`, `virtualenv`, `pipx`, `poetry`, <span v-mark.orange.circle="{ at: 1 }">`uv`</span>
+- Formatting: `black`, `isort`, `flake8`, <span v-mark.orange.circle="{ at: 1, delay: 250 }">`ruff`</span>
+- Static Analysis: `mypy`, <span v-mark.orange.circle="{ at: 1, delay: 600 }">`ty`</span>
+
+<br>
+
+### Rust
+
+- `cargo`
+
+
+---
+
+# Missing in Rust
+
+
+<div v-click class="w-full h-full flex flex-col justify-center">
+
+  <div class="text-left big-fill">
+    int
+  </div>
+
+  <div class="text-center big-fill">
+    str
+  </div>
+
+  <div class="text-right big-fill">
+    dict
+  </div>
+
+</div>
 
 <style>
-h1 {
-  background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
+.big-fill {
+  font-size: 8vw;
+  line-height: 0.9;
 }
 </style>
 
-<!--
-Here is another comment.
--->
+
+---
+layout: section
+---
+
+# Successful Stories
+
+Written in Rust; Used by Python developers
+
+
+---
+layout: two-cols-header
+---
+
+# Python Tooling
+
+https://astral.sh/
+
+::left::
+
+![img.png](/assets/screenshot_uv.png)
+
+::right::
+
+![img.png](/assets/screenshot_ruff.png)
+
+<style>
+.two-cols-header {
+  column-gap: 20px; /* Adjust the gap size as needed */
+}
+</style>
+
+
+---
+layout: two-cols-header
+---
+
+# Polars
+
+::left::
+
+- Data frame library
+- Backend written in Rust
+- 10x - 30x faster than Pandas
+
+<br>
+
+- Lazy expressions 🤗
+- No (multi-) indices
+- Consistent syntax
+
+::right::
+
+```python
+# Pandas
+df = pd.read_csv("data.csv")
+df = df[df["value"] > 10]
+df["double"] = df["value"] * 2
+result = (
+    df.groupby("category")["double"].mean()
+    .reset_index()
+)
+```
+
+<br>
+
+```python
+# Polars
+result = (
+    pl.scan_csv("data.csv")
+    .filter(pl.col("value") > 10)
+    .with_columns(double=pl.col("value") * 2)
+    .groupby("category")
+    .agg(pl.col("double").mean())
+    .collect()
+)
+```
+
+<style>
+.two-cols-header {
+  column-gap: 20px; /* Adjust the gap size as needed */
+}
+</style>
+
+
+---
+
+# Other Examples
+
+## orjson
+Fast, correct JSON library for Python.
+
+## Pydantic
+Data validation using Python type hints.
+
+## Robyn
+High-Performance \[...\] Web Framework with a Rust runtime.
+
+## just, Zed
+
+---
+layout: section
+---
+
+# Interoperability
+
+## Made Simple
+
+---
+
+# test
+
+<div v-click> visible after 1 click </div>
+<v-click at="+2"><div> visible after 3 clicks </div></v-click>
+<div v-click.hide="'-1'"> hidden after 2 clicks </div>
+
+```js {none|1|2}{at:'+5'}
+1  // highlighted after 7 clicks
+2  // highlighted after 8 clicks
+```
+
+
+
+---
+layout: two-cols-header
+class: text-2xl
+---
+
+# Call Rust from Python
+
+::left::
+
+- Write Rust code
+
+<v-clicks>
+
+- Decorate using <code>pyo3</code> macros
+<v-click-gap size="4" />
+- Compile &amp; install
+<v-click-gap size="0" />
+- Run Python
+
+</v-clicks>
+
+::right::
+
+````md magic-move {lines: true, at:0}
+```rust {all}{at:0} twoslash
+// src/lib.rs
+fn fibo(n: u32) -> u32 {
+    match n {
+        ..2 => 1,  // range(2)
+        _ => fibo(n-1) + fibo(n-2)
+    }
+}
+```
+
+```rust {all|2-5,15|2,6|2,8|all}{at:2} twoslash
+// src/lib.rs
+use pyo3::prelude::*;
+
+#[pymodule]
+mod my_lib {
+    use super::*;
+
+    #[pyfunction]
+    fn fibo(n: u32) -> u32 {
+        match n {
+            ..2 => 1,
+            _ => fibo(n-1) + fibo(n-2)
+        }
+    }
+}
+```
+
+```bash {1}
+> maturin develop
+🍹 Building a mixed python/rust project
+🔗 Found pyo3 bindings
+🐍 Found CPython 3.13 at .venv/bin/python
+📦 Built wheel for CPython 3.13 to <...>.whl
+✏️ Setting installed package as editable
+🛠 Installed my-lib-0.1.0
+
+```
+
+```python {all}
+# main.py
+from my_lib import fibo
+
+print(fibo(12))
+```
+````
+
 
 ---
 transition: slide-up
