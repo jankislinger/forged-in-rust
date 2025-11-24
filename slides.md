@@ -16,19 +16,6 @@ duration: 35min
 
 
 ---
-
-# Outline
-
-- 📝 **Transition from R** - 2018, dplyr -> polars, ggplot2 -> ?, Rcpp -> maturin + pyo3
-- 🎨 **Rust features** - error propagation, compiled, strongly typed, borrow checker
-- 🧑‍💻 **Tooling** - cargo | pip poetry uv; pytest flake8 ruff; sphynx
-- 🤹 **Python features** - int (unbounded), str (cached), dict (sorted)
-- 🎥 **Examples** - uv+ruff, polars
-- 📤 **Interoperability** - pyo3, maturin, show demo
-- 🛠 **pyo3-polars** - how (not) to call python from rust
-
-
----
 layout: image-right
 image: https://cdn.jsdelivr.net/gh/slidevjs/slidev-covers@main/static/6terqWC_KCk.webp
 class: text-3xl
