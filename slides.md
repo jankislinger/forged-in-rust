@@ -27,21 +27,29 @@ duration: 35min
 - 📤 **Interoperability** - pyo3, maturin, show demo
 - 🛠 **pyo3-polars** - how (not) to call python from rust
 
+
+---
+layout: image-right
+image: https://cdn.jsdelivr.net/gh/slidevjs/slidev-covers@main/static/6terqWC_KCk.webp
+class: text-3xl
 ---
 
 # 2018: R -> Python
 
-- dplyr <span v-click>-> polars</span>
-- ggplot2 <span v-click>-> 😔</span>
-- Rcpp <span v-click>-> PyO3 + maturin</span>
+- dplyr <span v-click>⇨ Polars</span>
+- ggplot2 <span v-click>😔</span>
+- Rcpp <span v-click>⇨ PyO3 + maturin</span>
 
 
 ---
 layout: two-cols-header
+class: text-2xl
 ---
 
 # Jan Kislinger
 
+<br>
+<br>
 
 ::left::
 
@@ -74,7 +82,7 @@ layout: two-cols-header
 ---
 layout: image-right
 image: https://cdn.jsdelivr.net/gh/slidevjs/slidev-covers@main/static/4uH95YbrT0c.webp
-class: text-2xl
+class: text-3xl
 ---
 
 # Agenda
@@ -92,15 +100,135 @@ layout: section
 ## Two different worlds
 
 ---
+layout: two-cols-header
+class: text-xl
+---
 
 # Rust Features
 
+::left::
+
+<v-clicks>
+
 - Compiled
 - Strongly typed
-- Traits
-- Enum, Option, Result
+- Traits, Generics
+- Enum
+- Option, Result
 - Propagated errors
 - Borrow checker
+
+</v-clicks>
+
+::right::
+
+<div v-click="['1', '+1']" position="absolute">
+
+```rust v-click="1"
+fn main() {
+    println!("Hello from a compiled Rust program!");
+}
+```
+</div>
+
+<div v-click="['2', '+1']" position="absolute">
+
+```rust v-click="2"
+fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+```
+</div>
+
+<div v-click="['3', '+1']" position="absolute">
+
+```rust
+trait Shape {
+    fn area(&self) -> f32;
+}
+
+struct Square { a: f32 };
+impl Shape for Square {
+    fn area(&self) -> f32 {
+        self.a * self.a
+    }
+}
+
+fn volume<T: Shape>(base: &T, height: f32) -> f32 {
+    base.area() * height
+}
+```
+</div>
+
+<div v-click="['4', '+1']" position="absolute">
+
+```rust
+enum Shape {
+    Square(f32),
+    Circle(f32)
+}
+
+fn area(x: &Shape) -> f32 {
+    match x {
+        Shape::Square(a) => a * a,
+        Shape::Circle(r) => PI * r * r
+    }
+}
+```
+</div>
+
+<div v-click="['5', '+1']" position="absolute">
+
+```rust
+enum MathError {
+    DivisionByZero
+}
+
+type MathResult<T> = Result<T, MathError>;
+
+fn div(a: i32, b: i32) -> MathResult<i32> {
+    if b == 0 {
+        return Err(MathError::DivisionByZero)
+    }
+    Ok(a / b)
+}
+
+fn safe_div(a: i32, b: i32) -> i32 {
+    div(a, b).unwrap_or(0)
+}
+```
+</div>
+
+<div v-click="['6', '+1']" position="absolute">
+
+```rust
+fn read_number(path: &str) -> anyhow::Result<i32> {
+    let mut file = File::open(path)?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;
+    let n: i32 = contents.trim().parse()?;
+    Ok(n)
+}
+```
+</div>
+
+<div v-click="7" position="absolute">
+
+```rust
+fn print_first(vec: Vec<u32>) {
+    println!("First element: {}", vec[0]);
+}
+
+fn main() {
+    vec = vec![1, 2, 3];
+    print_first(vec);
+    print_first(vec);  // Error: Value used after being moved
+}
+```
+</div>
+
+
+
 
 ---
 layout: image-left
@@ -110,7 +238,7 @@ backgroundSize: contain
 
 # The Rust Book
 
-https://doc.rust-lang.org/book/
+[doc.rust-lang.org/book](https://doc.rust-lang.org/book/)
 
 ---
 
@@ -118,44 +246,39 @@ https://doc.rust-lang.org/book/
 
 ### Python
 
-- Environment: `pip`, `virtualenv`, `pipx`, `poetry`, <span v-mark.orange.circle="{ at: 1 }">`uv`</span>
-- Formatting: `black`, `isort`, `flake8`, <span v-mark.orange.circle="{ at: 1, delay: 250 }">`ruff`</span>
-- Static Analysis: `mypy`, <span v-mark.orange.circle="{ at: 1, delay: 600 }">`ty`</span>
+<v-clicks>
+
+- Environment: `pip`, `virtualenv`, `pipx`, `poetry`, <span v-mark.orange.circle="{ at: 7 }">`uv`</span>
+- Formatting: `black`, `isort`, `flake8`, <span v-mark.orange.circle="{ at: 7, delay: 250 }">`ruff`</span>
+- Static Analysis: `mypy`, <span v-mark.orange.circle="{ at: 7, delay: 600 }">`ty`</span>
+- Documentation: `pydoc`, `sphinx`
+</v-clicks>
 
 <br>
 
+<div v-click>
+
 ### Rust
+</div>
+
+<div v-click>
 
 - `cargo`
+</div>
 
-
+---
+class: text-5xl
 ---
 
 # Missing in Rust
 
+<v-clicks>
 
-<div v-click class="w-full h-full flex flex-col justify-center">
+- int
+- str
+- dict
 
-  <div class="text-left big-fill">
-    int
-  </div>
-
-  <div class="text-center big-fill">
-    str
-  </div>
-
-  <div class="text-right big-fill">
-    dict
-  </div>
-
-</div>
-
-<style>
-.big-fill {
-  font-size: 8vw;
-  line-height: 0.9;
-}
-</style>
+</v-clicks>
 
 
 ---
@@ -173,7 +296,7 @@ layout: two-cols-header
 
 # Python Tooling
 
-https://astral.sh/
+[astral.sh](https://astral.sh/)
 
 ::left::
 
@@ -185,61 +308,135 @@ https://astral.sh/
 
 <style>
 .two-cols-header {
-  column-gap: 20px; /* Adjust the gap size as needed */
+  column-gap: 20px;
 }
 </style>
 
 
 ---
 layout: two-cols-header
+class: text-2xl
 ---
 
 # Polars
 
 ::left::
 
+<v-clicks start="0">
+
 - Data frame library
 - Backend written in Rust
+- Multithreaded by default
 - 10x - 30x faster than Pandas
 
-<br>
+</v-clicks>
 
-- Lazy expressions 🤗
-- No (multi-) indices
-- Consistent syntax
+
 
 ::right::
 
-```python
-# Pandas
-df = pd.read_csv("data.csv")
-df = df[df["value"] > 10]
-df["double"] = df["value"] * 2
-result = (
-    df.groupby("category")["double"].mean()
-    .reset_index()
-)
-```
+<v-clicks start="+1" depth="2">
 
-<br>
+- Lazy expressions 🤗
+- Consistent syntax
+- No (multi-) indices
 
-```python
+</v-clicks>
+
+::bottom::
+
+
+---
+layout: two-cols-header
+---
+
+# Between of Pandas and dplyr
+
+
+```python {all|1,4-5|1,6-7|1,3,8|all}
 # Polars
 result = (
     pl.scan_csv("data.csv")
     .filter(pl.col("value") > 10)
     .with_columns(double=pl.col("value") * 2)
-    .groupby("category")
-    .agg(pl.col("double").mean())
+    .group_by("category")
+    .agg(double_mean=pl.col("double").mean())
     .collect()
 )
 ```
 
+<br>
+
+::left::
+
+```python {all|1,4-5|1,6-8|1,3|all}{at:'0'}
+# Pandas
+result = (
+    pd.read_csv("data.csv")
+    .iloc[lambda d: d["value"] > 10]
+    .assign(double=lambda d: d["value"] * 2)
+    .groupby("category")
+    .agg(double_mean=("double", "mean"))
+    .reset_index()
+)
+```
+
+
+::right::
+
+
+```r {all|1,3-4|1,5-6|1,2,7|all}{at:'0'}
+# R::dplyr
+result <- read_csv("data.csv") |>
+  filter(value > 10) |>
+  mutate(double = value * 2) |>
+  group_by(category) |>
+  summarise(double_mean = mean(double, na.rm = TRUE))
+```
+
 <style>
 .two-cols-header {
-  column-gap: 20px; /* Adjust the gap size as needed */
+  column-gap: 4%;
+}
+.col-header .slidev-code-wrapper {
+    width: 74%;
+    padding-left: 26%;
 }
 </style>
+
+
+
+---
+
+# Lazy Expressions
+
+Functions with Polars syntax
+
+```python {all|1|2-3|5-7|10-21|all}{lines: true}
+def quadratic_fun(expr: str | pl.Expr, /, a: float, b: float, c: float) -> pl.Expr:
+    if isinstance(expr, str):
+        expr = pl.col(expr)
+        
+    quad = expr.pow(2).mul(a)
+    lin = expr.mul(b)
+    return quad + lin + c
+
+data = pl.DataFrame({"x": [0., 1., 2.]})
+data.with_columns(y=quadratic_fun("x", a=0.2, b=0.8, c=1.7))
+
+# shape: (3, 2)
+# ┌─────┬─────┐
+# │ x   ┆ y   │
+# │ --- ┆ --- │
+# │ f64 ┆ f64 │
+# ╞═════╪═════╡
+# │ 0.0 ┆ 1.7 │
+# │ 1.0 ┆ 2.7 │
+# │ 2.0 ┆ 4.1 │
+# └─────┴─────┘
+```
+
+
 
 
 ---
@@ -249,6 +446,8 @@ result = (
 ## orjson
 Fast, correct JSON library for Python.
 
+<v-clicks start="-1" every="2">
+
 ## Pydantic
 Data validation using Python type hints.
 
@@ -256,6 +455,8 @@ Data validation using Python type hints.
 High-Performance \[...\] Web Framework with a Rust runtime.
 
 ## just, Zed
+
+</v-clicks>
 
 ---
 layout: section
@@ -265,24 +466,10 @@ layout: section
 
 ## Made Simple
 
----
-
-# test
-
-<div v-click> visible after 1 click </div>
-<v-click at="+2"><div> visible after 3 clicks </div></v-click>
-<div v-click.hide="'-1'"> hidden after 2 clicks </div>
-
-```js {none|1|2}{at:'+5'}
-1  // highlighted after 7 clicks
-2  // highlighted after 8 clicks
-```
-
-
 
 ---
 layout: two-cols-header
-class: text-2xl
+class: text-xl
 ---
 
 # Call Rust from Python
@@ -294,7 +481,9 @@ class: text-2xl
 <v-clicks>
 
 - Decorate using <code>pyo3</code> macros
-<v-click-gap size="4" />
+<v-click-gap size="0" />
+- Export as Python module
+<v-click-gap size="0" />
 - Compile &amp; install
 <v-click-gap size="0" />
 - Run Python
@@ -314,21 +503,22 @@ fn fibo(n: u32) -> u32 {
 }
 ```
 
-```rust {all|2-5,15|2,6|2,8|all}{at:2} twoslash
+```rust {2-10|2,12-16}{at:2} twoslash
 // src/lib.rs
 use pyo3::prelude::*;
 
+#[pyfunction]
+fn fibo(n: u32) -> u32 {
+    match n {
+        ..2 => 1,
+        _ => fibo(n-1) + fibo(n-2)
+    }
+}
+
 #[pymodule]
 mod my_lib {
-    use super::*;
-
-    #[pyfunction]
-    fn fibo(n: u32) -> u32 {
-        match n {
-            ..2 => 1,
-            _ => fibo(n-1) + fibo(n-2)
-        }
-    }
+    #[pymodule_export]
+    use super::fibo;
 }
 ```
 
@@ -340,7 +530,6 @@ mod my_lib {
 📦 Built wheel for CPython 3.13 to <...>.whl
 ✏️ Setting installed package as editable
 🛠 Installed my-lib-0.1.0
-
 ```
 
 ```python {all}
@@ -351,6 +540,226 @@ print(fibo(12))
 ```
 ````
 
+---
+layout: two-cols-header
+---
+
+# Binding ~~Classes~~ Structs
+
+::left::
+
+````md magic-move {lines: true, at:0}
+```rust {1-4|6-14} twoslash
+struct Vector {
+    x: f32,
+    y: f32,
+}
+
+impl Vector {
+    fn norm(&self) -> f32 {
+        f32::sqrt(self.dot(&self))
+    }
+
+    fn dot(&self, other: &Self) -> f32 {
+        self.x * other.x + self.y * other.y
+    }
+}
+```
+
+```rust {1-4|6-21}{at:2} twoslash
+#[pyclass]
+struct PyVector {
+    inner: Arc<Vector>
+}
+
+#[pymethods]
+impl PyVector {
+    #[new]
+    fn new(x: f32, y: f32) -> Self {
+        let inner = Arc::new(Vector{x, y});
+        Self{inner}
+    }
+
+    fn norm(&self) -> f32 {
+        self.inner.norm()
+    }
+
+    fn dot(&self, other: &Self) -> f32 {
+        self.inner.dot(&other.inner)
+    }
+}
+```
+
+```rust {12-16|0|0|0} twoslash
+struct Vector { x: f32, y: f32 }
+impl Vector { ... }
+
+#[pyclass]
+struct PyVector {
+    inner: Arc<Vector>
+}
+
+#[pymethods]
+impl PyVector { ... }
+
+#[pymodule]
+mod my_lib {
+    #[pymodule_export]
+    use super::PyVector;
+}
+```
+````
+
+
+::right::
+
+
+````md magic-move {lines: true}
+```python {0|0|0|0|0|1|3-11|13-17}{at:2} twoslash
+from my_lib import PyVector
+
+class Vector:
+    def __init__(self, x: float, y: float):
+        self._inner = PyVector(x, y)
+
+    def norm(self) -> float:
+        return self._inner.norm()
+
+    def dot(self, other: Self):
+        return self._inner.dot(other._inner)
+        
+v1 = Vector(3, 4)
+print(v1.norm())  # 5.0
+
+v2 = Vector(2, 1)
+print(v1.dot(v2))  # 10.0
+```
+
+````
+
+<style>
+.two-cols-header {
+  column-gap: 2%;
+}
+</style>
+
+
+---
+layout: image-right
+image: /assets/harold.png
+class: text-2xl
+---
+
+# It's demo time!
+
+### Pre-requisites
+
+- cargo
+- maturin
+- uv
+
+
+---
+
+# (Not) Calling Python from Rust
+
+```python {1-6|5,10-13}{lines: true, at:2} twoslash
+import polars as pl
+
+df = (
+    pl.DataFrame({"x": [1, 2, 3]})
+    .with_columns(y=pl.col("x").map_elements(lambda x: x+1))
+)
+
+# Expr.map_elements is significantly slower than the native expressions API.
+# Only use if you absolutely CANNOT implement your logic otherwise.
+# Replace this expression...
+#   - pl.col("x").map_elements(lambda x: ...)
+# with this one instead:
+#   + pl.col("x") + 1
+# 
+#   .with_columns(y=pl.col("x").map_elements(lambda x: x+1))
+```
+
+
+---
+layout: two-cols-header
+---
+
+# Polars Bindings
+
+::left::
+
+````md magic-move {lines: true, at:0}
+```python {all|7-9|0|0|0|0|0}{lines: true} twoslash
+import polars as pl
+from farmhash import hash64
+
+(
+    pl.DataFrame({"text": ["hello", "world"]})
+    .with_columns(
+        hash=pl.col("text").map_elements(
+            hash64, return_dtype=pl.UInt64
+        )
+    )
+)
+
+# ┌───────┬──────────────────────┐
+# │ text  ┆ hash                 │
+# │ ---   ┆ ---                  │
+# │ str   ┆ u64                  │
+# ╞═══════╪══════════════════════╡
+# │ hello ┆ 13009744463427800296 │
+# │ world ┆ 16436542438370751598 │
+# └───────┴──────────────────────┘
+```
+
+```python {4|6-12|14-17}{lines: true} twoslash
+import polars as pl
+from polars.plugins import register_plugin_function
+
+LIB = Path(__file__).parent / "my_lib.abi3.so"
+
+def farm64(col_name: str) -> pl.Expr:
+    return register_plugin_function(
+        plugin_path=LIB,
+        args=[pl.col(col_name)],
+        function_name="farm64",
+        is_elementwise=True,
+    )
+
+(
+    pl.DataFrame({"text": ["hello", "world"]})
+    .with_columns(hash=farm64("text"))
+)
+```
+
+````
+
+::right::
+
+```rust {0|all|6|7-9|10|13-14|13-14|0}{lines: true, at:2} twoslash
+use polars::prelude::*;
+use pyo3_polars::derive::polars_expr;
+
+#[polars_expr(output_type=UInt64)]
+fn farm64(inputs: &[Series]) -> PolarsResult<Series> {
+    let strings: &StringChunked = inputs[0].str()?;
+    let hashes: UInt64Chunked = strings.iter()
+        .map(|x| x.map(farm::fingerprint64))
+        .collect();
+    Ok(hashes.into_series())
+}
+
+#[pymodule]
+mod my_lib {}
+```
+
+<style>
+.two-cols-header {
+  column-gap: 2%;
+}
+</style>
 
 ---
 transition: slide-up
