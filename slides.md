@@ -1032,6 +1032,116 @@ mod my_lib {}
 
 ---
 layout: two-cols-header
+---
+
+# Docker Image Optimization
+
+::left::
+
+````md magic-move {lines: true, at:0}
+```python
+# pipeline.py
+(
+    pl.scan_csv("data.csv")
+    .filter(pl.col("value") > 10)
+    .with_columns(double=pl.col("value") * 2)
+    .group_by("category")
+    .agg(double_mean=pl.col("double").mean())
+    .sink_csv("result.csv")
+)
+```
+
+```python
+# pipeline.py
+(
+    pl.scan_csv("data.csv")
+    .filter(pl.col("value").gt(10))
+    .with_columns(
+        pl.col("value").mul(2).alias("double"),
+    )
+    .group_by(pl.col("category"))
+    .agg(
+        pl.col("double").mean().alias("double_mean"),
+    )
+    .sink_csv("result.csv")
+)
+```
+
+```rust{*|0}
+// pipeline.rs
+let lf = LazyCsvReader::new("data.csv")
+    .has_header(true)
+    .finish()?
+    .filter(col("value").gt(lit(10)))
+    .with_columns([
+        col("value").mul(lit(2)).alias("double"),
+    ])
+    .groupby([col("category")])
+    .agg([
+        col("double").mean().alias("double_mean"),
+    ]);
+
+lf.sink(
+    SinkDestination::File("result.csv".into()),
+    FileType::Csv.into(),
+    Default::default(),
+)?;
+```
+````
+
+
+::right::
+
+````md magic-move {lines: true, at:0}
+```dockerfile{*|0|0}
+FROM python
+
+COPY . /app
+RUN --mount=uv uv sync
+```
+
+```dockerfile
+FROM rust as builder
+
+COPY . /build
+RUN cargo install
+
+FROM debian
+COPY --from builder cargo/bin/myapp /bin/myapp
+```
+````
+
+<style>
+.two-cols-header {
+  column-gap: 2%;
+}
+</style>
+
+<!--
+- typical ETL pipeline step
+- read, transform, save
+- build docker image
+- base 1.2 GB
+- very simplified production env
+[click]
+- methods instead of operators
+- alias instead of kwargs
+[click]
+- consistent syntax across languages
+- read / write complicated
+- processing part is the same
+- transform -> function -> export
+[click]
+- two-stage build
+
+-->
+
+---
+
+
+
+---
+layout: two-cols-header
 class: text-2xl
 ---
 
