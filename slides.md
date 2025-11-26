@@ -392,6 +392,7 @@ class: text-3xl
 [click]
 - same order as created
 - don't realize we rely on
+- header - previous talk
 -->
 
 ---
@@ -586,6 +587,7 @@ High-Performance \[...\] Web Framework with a Rust runtime.
 <!--
 [click]
 [click]
+- impit - previous talk
 - seems like all new libraries in Rust
 - why?
 - because of ...
