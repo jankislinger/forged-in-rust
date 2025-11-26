@@ -14,3 +14,4 @@ To start the slide show:
 ## Download PDF
 
 - With animations: [forged_in_rust.pdf](forged_in_rust.pdf)
+- Handout (some code examples are missing): [forged_in_rust_handout.pdf](forged_in_rust_handout.pdf)
