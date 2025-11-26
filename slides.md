@@ -40,7 +40,7 @@ class: text-3xl
 
 - Performance
 - Most admired language
-- PyO3, maturin
+- Effortless integration
 
 </v-clicks>
 
@@ -1137,6 +1137,50 @@ COPY --from builder cargo/bin/myapp /bin/myapp
 -->
 
 ---
+class: text-2xl
+---
+
+# Conclusion
+
+<v-clicks>
+
+- Rust performance with the interactivity of Python
+- The ecosystem is ready: PyO3, maturin
+- Several projects have already shown success
+- Start tiny: one function, one Polars plugin
+
+</v-clicks>
+
+<br>
+
+<div v-click class="opacity-60 text-7xl mt-8 mx-8">
+  Q & A
+</div>
+
+<!--
+[click]
+- Key message: this is not "abandon Python"
+- Keep Python for interactivity, notebooks, ecosystem
+- Use Rust where performance matters
+
+[click]
+- Tooling is boring in a good way now
+- PyO3 + maturin for bindings
+- Combine with cargo / uv
+
+[click]
+- Polars is becoming mainstream
+- Rust-based tools like uv / ruff already in your daily workflow
+- Speed is their common trait
+
+[click]
+- You don't need to rewrite everything
+- Wrap a single hot loop, or one hashing / parsing function
+
+[click]
+- Invite questions
+- Encourage them to actually try maturin or a tiny Rust experiment
+-->
 
 
 
