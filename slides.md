@@ -30,8 +30,43 @@ class: text-3xl
 
 
 ---
+class: text-3xl
+---
+
 
 # Why Rust
+
+<v-clicks depth="1">
+
+- Performance
+- Most admired language
+- PyO3, maturin
+
+</v-clicks>
+
+
+<img src="/assets/logos/ferris.png"
+     draggable="true"
+     style="
+       position: absolute;
+       left: 45%;
+       top: 45%;
+       width: 40%;
+     "
+/>
+
+<!--
+[click]
+- Python: 55x slower than C
+- Rust: 17% slower than C
+- ( programming-language-benchmarks.vercel.app )
+[click]
+- Stack overflow survey
+- Python: most desired (39.2%)
+- Rust: most admired (72.4%)
+[click]
+- easy to use with Python
+-->
 
 
 ---
@@ -47,6 +82,11 @@ class: text-3xl
 - Popular projects
 - Write Polars extension
 - (+1 bonus tip)
+
+<!--
+goals:
+- it's simple
+-->
 
 ---
 layout: two-cols-header
@@ -187,7 +227,7 @@ enum Result<T, E> {
 <div v-click="['7', '+1']" position="absolute">
 
 ```rust
-fn parse_int_match(s: &str) -> i32 {
+fn parse_int_fallback(s: &str) -> i32 {
     match s.parse() {
         Ok(n) => n,
         Err(_) => i32::MIN,
@@ -231,9 +271,58 @@ struct Point {
 fn main() {
     let point = Point { x: 1, y: 2 };
     println!("{:?}", point);
+    // Point { x: 1, y: 2 }
 }
 ```
 </div>
+
+
+<!--
+[click]
+- compiler is your friend
+- error -> suggestion for a fix
+[click]
+- not pedantic
+- some types are inferred
+[click]
+- encapsulates data and functions
+- similar to dataclasses, pydantic
+- not OO lang
+- no inheritance
+- there is polymorphism, though
+[click]
+- makes polymorphism possible
+- similar to protocol class
+- interface in go, java
+- generic - accept any struct that implements
+- compiler creates version per struct
+[click]
+- another way to handle polymorphism
+- py: just categories (int, str)
+- rust: can hold data
+- all types are known
+- nobody cam implement triangle
+[click]
+- special type of enum
+- implemented in standard lib
+- option - either nothing or something
+- result - ok with data or an error
+- used instead of exceptions
+[click]
+- if function can fail, returns result
+- each result has to be handled
+- depends on application
+- default value, propagate, halt = panic
+[click]
+- most complicated concept
+- exactly one owner of each object
+- pass by value = give ownership
+- pass reference = borrow
+[click]
+- like decorator
+- generates boilerplate code
+- compile-time
+-->
 
 
 
@@ -249,7 +338,7 @@ fn main() {
 - Formatting: `black`, `isort`, `flake8`, <span v-mark.orange.circle="{ at: 7, delay: 250 }">`ruff`</span>
 - Static Analysis: `mypy`, <span v-mark.orange.circle="{ at: 7, delay: 600 }">`ty`</span>
 - Documentation: `pydoc`, `sphinx`
-- 
+
 </v-clicks>
 
 <br>
@@ -284,6 +373,26 @@ class: text-3xl
 
 </v-clicks>
 
+<!--
+- not to say Rust is better in any way
+- lots of areas python still wins
+- interactivity
+- rapid prototyping
+- lots of libraries (ML, visualization, data proc)
+- notebooks
+- 3 hidden features - miss when switch lang
+[click]
+- 32, 64
+- signed, unsigned
+[click]
+- faster comparison, dict lookup
+- hash of string cached
+- calculated only once
+- I've written algo based on string lookup...
+[click]
+- same order as created
+- don't realize we rely on
+-->
 
 ---
 layout: section
@@ -316,13 +425,21 @@ layout: two-cols-header
 }
 </style>
 
+<!--
+- CLI tools
+- common denominator - speed
+- branch pruning -> feasible versions
+- install = symlink to cache
+- not just speed
+- uv - makes development in monorepo easier
+- ruff - single installations, all rules, no plugins
+- unsafe fixes ... brave enough
+-->
 
 ---
 layout: two-cols-header
 class: text-2xl
 ---
-
-# Polars
 
 ::left::
 
@@ -349,6 +466,27 @@ class: text-2xl
 
 ::bottom::
 
+<img src="/assets/logos/polars.png"
+     draggable="true"
+     style="
+       position: absolute;
+       left: 45%;
+       top: 60%;
+       width: 40%;
+     "
+/>
+
+<!--
+[click]
+[click]
+[click]
+[click]
+- 3 years ago
+- Showmax
+- 12x - 15x
+- blog post
+- Leading companies using Polars
+-->
 
 ---
 layout: two-cols-header
@@ -407,6 +545,26 @@ result <- read_csv("data.csv") |>
 }
 </style>
 
+<!--
+- the same transformation in all
+- read csv, filter, create a new column, group, and aggregate
+[click]
+- R: feels like you’re talking about the column, not variable
+- Polars: pl.col plays the same role
+[click]
+- full expressions, any transformations
+- pandas - constrained
+[click]
+- creates a plan, no read
+- optimizes pipeline
+- push filter down
+- skip unused columns
+- process larger files
+[click]
+- subjective
+- moves syntax closer to R
+-->
+
 
 ---
 
@@ -425,13 +583,19 @@ High-Performance \[...\] Web Framework with a Rust runtime.
 
 </v-clicks>
 
+<!--
+[click]
+[click]
+- seems like all new libraries in Rust
+- why?
+- because of ...
+-->
+
 ---
 layout: section
 ---
 
-# Interoperability
-
-## Made Simple
+# PyO3 + maturin
 
 
 ---
@@ -731,6 +895,35 @@ except ValueError as e:
 </style>
 
 
+---
+layout: two-cols
+class: text-xl
+---
+
+# Good Case for Rust
+
+<v-clicks>
+
+- Performance-critical code
+- Tight loops over large arrays
+- Parsing / validation
+- Specific algorithm
+- Wrapping an existing Rust crate
+
+</v-clicks>
+
+::right::
+
+# Stay in Python
+
+<v-clicks>
+
+- I/O-bound tasks
+- Leverage existing library
+- Rapid prototyping
+- Interactive data exploration
+
+</v-clicks>
 
 
 ---
