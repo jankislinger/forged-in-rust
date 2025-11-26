@@ -9,3 +9,8 @@ To start the slide show:
 - `pnpm install`
 - `pnpm dev`
 - visit <http://localhost:3030>
+
+
+## Download PDF
+
+- With animations: [forged_in_rust.pdf](forged_in_rust.pdf)
